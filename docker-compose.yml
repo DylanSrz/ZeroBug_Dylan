@@ -1,0 +1,52 @@
+name: container_zeroBug_dylan
+
+services:
+
+  db_restaurant:
+    image: postgres:16-alpine
+    container_name: db-zeroBug_dylan
+    restart: unless-stopped
+
+    ports:
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
+
+    environment:
+      POSTGRES_USER: "${DATABASE_USER}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+      POSTGRES_DB: "${DATABASE_NAME}"
+
+    volumes:
+      - db_zeroBug_dylan:/var/lib/postgresql/data
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  api-restaurant:
+    build: .
+    container_name: api-zeroBug_dylan
+    restart: unless-stopped
+
+    depends_on:
+      db_restaurant:
+        condition: service_healthy
+
+    environment:
+      APP_PORT: ${APP_PORT}
+      NODE_ENV: ${NODE_ENV}
+
+      # Dentro de Docker, PostgreSQL se alcanza usando el nombre del servicio: "db"
+      DATABASE_HOST: db_restaurant
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+
+volumes:
+  db_zeroBug_dylan:
