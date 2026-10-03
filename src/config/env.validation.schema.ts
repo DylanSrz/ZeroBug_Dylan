@@ -11,16 +11,19 @@ export const envValidationSchema = z.object({
     DATABASE_NAME: z.string().min(1),
 })
 
-export type Env = z.infer<typeof schemaWithRules>
+export type Env = z.infer<typeof envValidationSchema>
 
 const schemaWithRules = envValidationSchema.superRefine((env, ctx) => {
-    
+
 })
 
-export const validateEnv = (config: Record<string, unknown>): Env =>{
+export const validateEnv = (config: Record<string, unknown>): Env => {
     const result = schemaWithRules.safeParse(config)
 
     if (!result.success) {
-        const details = result.error.issues.map((issue) => `  - ${issue.path.join()}`)
+        const details = result.error.issues.map((issue) => `  - ${issue.path.join('.')}`)
+
+        throw new Error(`Variables de entorno invalidas: \n${details}`)
     }
+    return result.data
 }
