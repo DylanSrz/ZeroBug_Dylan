@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TablesController } from './tables.controller';
-import { TablesService } from './tables.service';
+import { TablesController } from './tables.controller.js';
+import { TablesService } from './tables.service.js';
 
 describe('TablesController', () => {
   let controller: TablesController;

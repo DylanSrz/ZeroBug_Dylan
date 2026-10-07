@@ -14,9 +14,11 @@ import { EnvConfig } from './config/env.config.js';
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
 			inject: [ConfigService],
-			useFactory: (typeConfig: ConfigService) => ({
-				...typeConfig.getOrThrow('database')
-			})
+			useFactory: (typeConfig: ConfigService) => (
+				console.log(typeConfig),
+				{
+					...typeConfig.getOrThrow('database')
+				})
 		})
 	],
 	controllers: [AppController],

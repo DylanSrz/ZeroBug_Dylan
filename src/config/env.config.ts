@@ -4,10 +4,11 @@ export const EnvConfig = () => ({
         env: process.env.NODE_ENV,
     },
     database: {
+        type: process.env.DATABASE_TYPE || 'postgres',
         host: process.env.DATABASE_HOST,
         port: Number(process.env.DATABASE_PORT),
-        user: process.env.DATABASE_USER,
+        username: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
-        name: process.env.DATABASE_NAME
+        database: process.env.DATABASE_NAME,
     }
 })

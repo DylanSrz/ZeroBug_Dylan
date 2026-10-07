@@ -22,7 +22,7 @@ services:
       test: [ "CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}" ]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 1
       start_period: 10s
 
   api-restaurant:
@@ -35,15 +35,13 @@ services:
         condition: service_healthy
 
     environment:
-      APP_PORT: ${APP_PORT}
-      NODE_ENV: ${NODE_ENV}
-
-      # Dentro de Docker, PostgreSQL se alcanza usando el nombre del servicio: "db"
-      DATABASE_HOST: db_restaurant
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_USER: ${DATABASE_USER}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      DATABASE_NAME: ${DATABASE_NAME}
+      APP_PORT: "${APP_PORT}"
+      NODE_ENV: "${NODE_ENV}"
+      DATABASE_HOST: "${DATABASE_HOST}"
+      DATABASE_PORT: "${DATABASE_PORT}"
+      DATABASE_USER: "${DATABASE_USER}"
+      DATABASE_PASSWORD: "${DATABASE_PASSWORD}"
+      DATABASE_NAME: "${DATABASE_NAME}"
 
     ports:
       - "${APP_PORT}:${APP_PORT}"
