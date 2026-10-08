@@ -37,7 +37,7 @@ services:
     environment:
       APP_PORT: "${APP_PORT}"
       NODE_ENV: "${NODE_ENV}"
-      DATABASE_HOST: "${DATABASE_HOST}"
+      DATABASE_HOST: db_restaurant
       DATABASE_PORT: "${DATABASE_PORT}"
       DATABASE_USER: "${DATABASE_USER}"
       DATABASE_PASSWORD: "${DATABASE_PASSWORD}"
