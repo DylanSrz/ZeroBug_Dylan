@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTableDto } from './dto/create-table.dto.js';
 import { UpdateTableDto } from './dto/update-table.dto.js';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Table } from './entities/table.entity.js';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TablesService {
-  create(createTableDto: CreateTableDto) {
-    return 'This action adds a new table';
-  }
 
-  findAll() {
-    return `This action returns all tables`;
-  }
+    constructor(
+        @InjectRepository(Table)
+        private readonly tableRepository: Repository<Table>,
+    ) { }
 
-  findOne(id: number) {
-    return `This action returns a #${id} table`;
-  }
+    async create(createTableDto: CreateTableDto): Promise<Table> {
+        const table = this.tableRepository.create(createTableDto)
+        return this.tableRepository.save(table);
+    }
 
-  update(id: number, updateTableDto: UpdateTableDto) {
-    return `This action updates a #${id} table`;
-  }
+    findAll() {
+        return `This action returns all tables`;
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} table`;
-  }
+    findOne(id: number) {
+        return `This action returns a #${id} table`;
+    }
+
+    update(id: number, updateTableDto: UpdateTableDto) {
+        return `This action updates a #${id} table`;
+    }
+
+    remove(id: number) {
+        return `This action removes a #${id} table`;
+    }
 }
