@@ -1,11 +1,11 @@
 export enum TableStatus {
-    available = 'AVAILABLE',
-    occupied = 'OCCUPIED',
-    out_of_service = 'OUT_OF_SERVICE'
+    AVAILABLE = 'AVAILABLE',
+    OCCUPIED = 'OCCUPIED',
+    OUT_OF_SERVICE = 'OUT_OF_SERVICE'
 }
 
 export enum TableZone {
-    terrace = 'TERRACE',
-    inside = 'INSIDE',
-    vip = 'VIP'
+    TERRACE = 'TERRACE',
+    INSIDE = 'INSIDE',
+    VIP = 'VIP'
 }

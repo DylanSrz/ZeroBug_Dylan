@@ -1,11 +1,11 @@
-import { Check, Column, Entity, PrimaryColumn } from "typeorm"
+import { Check, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
 import { TableStatus, TableZone } from "../enum/table.enum.js"
 
 @Entity()
 @Check(`"capacity" > 0`)
 export class Table {
 
-    @PrimaryColumn("uuid")
+    @PrimaryGeneratedColumn("uuid")
     id: string
 
     @Column({
@@ -19,14 +19,14 @@ export class Table {
     @Column({
         type: "enum",
         enum: TableZone,
-        default: TableZone.inside
+        default: TableZone.INSIDE
     })
     zone: TableZone
 
     @Column({
         type: "enum",
         enum: TableStatus,
-        default: TableStatus.available
+        default: TableStatus.AVAILABLE
     })
     status: TableStatus
 }
